@@ -7,20 +7,28 @@ public class Torch : MonoBehaviour
     public float Radius;
     public float Depth;
     public float Angle;
-
+    public Light SpotLight;
     private Physics _physics;
 
     void FixedUpdate()
     {
+        Depth = SpotLight.range;
+        Angle = SpotLight.spotAngle;
+        Radius = SpotLight.range * Mathf.Tan(SpotLight.spotAngle * 0.5f * Mathf.Deg2Rad);
+        DoSphereCast();
+    }
 
-        RaycastHit[] coneHits = _physics.ConeCastAll(transform.position, Radius, transform.forward, Depth, Angle);
-
-        if (coneHits.Length > 0)
+    void DoSphereCast()
+    {
+        var hits = Physics.SphereCastAll(transform.position, Radius, transform.forward, Depth);
+        foreach (var hit in hits)
         {
-            for (int i = 0; i < coneHits.Length; i++)
+            Vector3 dirToHit = (hit.transform.position - transform.position).normalized;
+            float angle = Vector3.Angle(transform.forward, dirToHit);
+
+            if (angle < SpotLight.spotAngle / 2) // Check if within flashlight cone
             {
-                //do something with collider information
-                coneHits[i].collider.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 1f);
+                Debug.Log("inside " + hit.collider.gameObject.name);
             }
         }
     }
