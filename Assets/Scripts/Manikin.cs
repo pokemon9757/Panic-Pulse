@@ -13,8 +13,9 @@ public class Manikin : MonoBehaviour
     public string Idle = "Idle";
     public string Run = "Run";
     public string Kill = "Kill";
-
     public bool testChase = false;
+    Coroutine _coFreeze;
+    float _remainingFreezeTime = 0;
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -28,13 +29,36 @@ public class Manikin : MonoBehaviour
         if (testChase)
         {
             testChase = false;
-            _agent.SetDestination(_player.position);
+            ChasePlayer();
             _animator.SetTrigger(Run);
         }
     }
 
-    public void ChasePlayerAfter(float delay)
+    public void ChasePlayer()
     {
-        _agent.SetDestination(_player.position);
+        ChasePosition(_player.position);
+    }
+
+    public void ChasePosition(Vector3 pos)
+    {
+        _agent.SetDestination(pos);
+    }
+
+    public void Freeze(float time)
+    {
+        _remainingFreezeTime = time;
+        if (_coFreeze == null) _coFreeze = StartCoroutine(CoFreeze());
+    }
+
+    IEnumerator CoFreeze()
+    {
+        _agent.isStopped = true;
+        while (_remainingFreezeTime >= 0)
+        {
+            _remainingFreezeTime -= Time.deltaTime;
+            yield return null;
+        }
+        _agent.isStopped = false;
+        _coFreeze = null;
     }
 }

@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     public int CurrentHeartBeat = 120;
     public int BaseHeartBeat = 60;
-    public float MoveSpeed = 1;
+    public float MinMoveSpeed = 2;
+    public float MaxMoveSpeed = 5;
     [SerializeField] DynamicMoveProvider moveProvider;
 
     void OnTriggerEnter(Collider other)
@@ -29,8 +30,8 @@ public class Player : MonoBehaviour
     {
         // Reduce movement speed based on HB 
         float hbRateToNormal = CurrentHeartBeat / BaseHeartBeat;
-        MoveSpeed = Mathf.Lerp(0.2f, 1f, 1 / hbRateToNormal);
-        moveProvider.moveSpeed = MoveSpeed;
+        MaxMoveSpeed = Mathf.Lerp(MinMoveSpeed, MaxMoveSpeed, 1 / hbRateToNormal);
+        moveProvider.moveSpeed = MaxMoveSpeed;
 
         // Todo: Play HB audio based on the value
 
