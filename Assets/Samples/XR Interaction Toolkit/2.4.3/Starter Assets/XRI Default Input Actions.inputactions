@@ -2197,6 +2197,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Game Actions",
+            "id": "36dafa30-e8eb-43f5-9d53-87bc74edf0dd",
+            "actions": [
+                {
+                    "name": "Decrease HR",
+                    "type": "Button",
+                    "id": "ff6248a0-b4a6-4c86-a552-58b414d88f83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Increase HR",
+                    "type": "Button",
+                    "id": "1108900d-87e2-4ee8-b7c3-3748b3f0f39d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "146a71a0-073a-42ab-901a-4c79cba06233",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Decrease HR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9bad2164-cea4-4c57-a42f-b23c2187299c",
+                    "path": "<XRController>{LeftHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Increase HR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

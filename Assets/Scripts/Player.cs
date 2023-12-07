@@ -5,8 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class Player : MonoBehaviour
 {
-    public int CurrentHeartBeat = 120;
-    public int BaseHeartBeat = 60;
+    public HeartBeat heartBeat;
     public float MinMoveSpeed = 2;
     public float MaxMoveSpeed = 5;
     [SerializeField] DynamicMoveProvider moveProvider;
@@ -29,11 +28,6 @@ public class Player : MonoBehaviour
     void AdaptHeartBeat()
     {
         // Reduce movement speed based on HB 
-        float hbRateToNormal = CurrentHeartBeat / BaseHeartBeat;
-        MaxMoveSpeed = Mathf.Lerp(MinMoveSpeed, MaxMoveSpeed, 1 / hbRateToNormal);
-        moveProvider.moveSpeed = MaxMoveSpeed;
-
-        // Todo: Play HB audio based on the value
-
+        moveProvider.moveSpeed = Mathf.Lerp(MinMoveSpeed, MaxMoveSpeed, 1 / heartBeat.CurrentHRLevel);
     }
 }

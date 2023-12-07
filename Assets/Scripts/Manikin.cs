@@ -6,14 +6,19 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class Manikin : MonoBehaviour
 {
-    Transform _player;
-    NavMeshAgent _agent;
-    Animator _animator;
+    [SerializeField] NoiseDetection noiseDetection;
+    public AudioClip[] FootstepAudioClips;
+    [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+
     [Header("Animation triggers")]
     public string Idle = "Idle";
     public string Run = "Run";
     public string Kill = "Kill";
     public bool testChase = false;
+    Transform _player;
+    NavMeshAgent _agent;
+    Animator _animator;
+    CapsuleCollider _collider;
     Coroutine _coFreeze;
     float _remainingFreezeTime = 0;
     void Start()
@@ -21,7 +26,9 @@ public class Manikin : MonoBehaviour
         _animator = GetComponent<Animator>();
         _player = FindObjectOfType<Player>().transform;
         _agent = GetComponent<NavMeshAgent>();
+        _collider = GetComponent<CapsuleCollider>();
         tag = "Manikin";
+        noiseDetection.OnHighHeartBeatDetected += ChasePlayer;
     }
 
     void Update()
@@ -61,4 +68,17 @@ public class Manikin : MonoBehaviour
         _agent.isStopped = false;
         _coFreeze = null;
     }
+
+    private void OnFootstep(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            if (FootstepAudioClips.Length > 0)
+            {
+                var index = Random.Range(0, FootstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_collider.center), FootstepAudioVolume);
+            }
+        }
+    }
+
 }
