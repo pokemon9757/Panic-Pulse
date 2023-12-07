@@ -23,7 +23,7 @@ public class Torch : MonoBehaviour
         foreach (var hit in hits)
         {
             var hitGO = hit.collider.gameObject;
-            Debug.Log("Hitting GO " + hitGO.name);
+            Debug.Log("Hitting manikin " + hitGO.name);
 
             // Freeze if it is manikin
             var manikin = hitGO.GetComponent<Manikin>();
