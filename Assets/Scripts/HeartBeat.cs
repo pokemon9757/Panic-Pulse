@@ -19,17 +19,13 @@ public class HeartBeat : MonoBehaviour
     {
         _inputActions = new XRIDefaultInputActions();
         _inputActions.Enable();
+        _inputActions.GameActions.IncreaseHR.performed += IncreaseHR;
+        _inputActions.GameActions.DecreaseHR.performed += DecreaseHR;
     }
 
     void OnDisable()
     {
         _inputActions.Disable();
-    }
-
-    void Awake()
-    {
-        _inputActions.GameActions.IncreaseHR.performed += IncreaseHR;
-        _inputActions.GameActions.DecreaseHR.performed += DecreaseHR;
     }
 
     void IncreaseHR(UnityEngine.InputSystem.InputAction.CallbackContext context)

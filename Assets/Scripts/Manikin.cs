@@ -14,6 +14,7 @@ public class Manikin : MonoBehaviour
     public string Idle = "Idle";
     public string Run = "Run";
     public string Kill = "Kill";
+    public AttackAbility attackAbility;
     public bool testChase = false;
     Transform _player;
     NavMeshAgent _agent;
@@ -27,6 +28,7 @@ public class Manikin : MonoBehaviour
         _player = FindObjectOfType<Player>().transform;
         _agent = GetComponent<NavMeshAgent>();
         _collider = GetComponent<CapsuleCollider>();
+        attackAbility.OnCanAttack.AddListener(Attack);
         tag = "Manikin";
         noiseDetection.OnHighHeartBeatDetected += ChasePlayer;
     }
@@ -66,6 +68,7 @@ public class Manikin : MonoBehaviour
             yield return null;
         }
         _agent.isStopped = false;
+
         _coFreeze = null;
     }
 
@@ -81,4 +84,10 @@ public class Manikin : MonoBehaviour
         }
     }
 
+    void Attack(Player player)
+    {
+        if (_remainingFreezeTime > 0) return;
+        _animator.SetTrigger(Kill);
+        player.Die();
+    }
 }

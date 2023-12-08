@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class NoiseDetection : MonoBehaviour
 {
     public UnityAction OnHighHeartBeatDetected;
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag != "Player") return;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class Player : MonoBehaviour
@@ -9,7 +10,7 @@ public class Player : MonoBehaviour
     public float MinMoveSpeed = 2;
     public float MaxMoveSpeed = 5;
     [SerializeField] DynamicMoveProvider moveProvider;
-
+    public UnityEvent OnPlayerDeath;
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -20,7 +21,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Todo: Update HB based on the watch
         // Adapt the actions after HB has been updated
         AdaptHeartBeat();
     }
@@ -29,5 +29,13 @@ public class Player : MonoBehaviour
     {
         // Reduce movement speed based on HB 
         moveProvider.moveSpeed = Mathf.Lerp(MinMoveSpeed, MaxMoveSpeed, 1 / heartBeat.CurrentHRLevel);
+    }
+
+    public void Die()
+    {
+        Debug.Log("ded");
+        // turn the vision of player to the manikin
+
+        // HR increases?
     }
 }
