@@ -39,7 +39,6 @@ public class Manikin : MonoBehaviour
         {
             testChase = false;
             ChasePlayer();
-            _animator.SetTrigger(Run);
         }
     }
 
@@ -50,6 +49,7 @@ public class Manikin : MonoBehaviour
 
     public void ChasePosition(Vector3 pos)
     {
+        _animator.SetTrigger(Run);
         _agent.SetDestination(pos);
     }
 
@@ -62,12 +62,14 @@ public class Manikin : MonoBehaviour
     IEnumerator CoFreeze()
     {
         _agent.isStopped = true;
+        _animator.speed = 0;
         while (_remainingFreezeTime >= 0)
         {
             _remainingFreezeTime -= Time.deltaTime;
             yield return null;
         }
         _agent.isStopped = false;
+        _animator.speed = 1;
 
         _coFreeze = null;
     }

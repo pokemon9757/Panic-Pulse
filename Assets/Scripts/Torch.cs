@@ -19,15 +19,15 @@ public class Torch : MonoBehaviour
 
     void DoSphereCast()
     {
-        // var hits = Physics.SphereCastAll(transform.position, Radius, transform.forward, Depth - Radius * 2, LayerMask.GetMask("Manikins"));
-        // foreach (var hit in hits)
-        // {
-        //     var hitGO = hit.collider.gameObject;
-        //     Debug.Log("Hitting manikin " + hitGO.name);
+        var hits = Physics.SphereCastAll(transform.position, Radius, transform.forward, Depth - Radius * 2, LayerMask.GetMask("Manikins"));
+        foreach (var hit in hits)
+        {
+            var hitGO = hit.collider.gameObject;
+            Debug.Log("Hitting manikin " + hitGO.name);
 
-        //     // Freeze if it is manikin
-        //     var manikin = hitGO.GetComponent<Manikin>();
-        //     manikin.Freeze(FreezeTime);
-        // }
+            // Freeze if it is manikin
+            var manikin = hitGO.GetComponent<Manikin>();
+            manikin.Freeze(FreezeTime);
+        }
     }
 }
